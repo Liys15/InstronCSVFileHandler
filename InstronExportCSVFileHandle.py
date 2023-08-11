@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
-This is a temporary script file.
+Author: Liys15
+Date: 2023-08-11
+Description: This is a script file dealing CSV.
 """
 
 import pandas as pd
@@ -20,15 +20,18 @@ with open(filepath, 'r', encoding='ANSI') as fp:
         else:
             res_list.append(l)
     
-    num_specimens = int(res_list[-1].split(',')[0].strip('"'))
+    num_tests = int(res_list[-1].split(',')[0].strip('"'))
+    test_marks_list = []
+    for i in range(num_tests):
+        test_marks_list.append(res_list[i+3].split(',')[1].strip('"'))
 
     df = pd.read_csv(fp, encoding="ANSI", header=None, index_col=False)
 
     specimen_start_idxs = []
-    for i in range(num_specimens):
+    for i in range(num_tests):
         specimen_start_idxs.append(df[df[0]==i+1].index)
-    for i in range(num_specimens):
+    for i in range(num_tests):
         idxa = specimen_start_idxs[i][0]
-        idxb = specimen_start_idxs[i+1][0] if i<num_specimens-1 else -1
-        df.iloc[idxa:idxb, 1:].to_csv("./specimen{:0>2d}.csv".format(i+1), header=0, index=0)
+        idxb = specimen_start_idxs[i+1][0] if i<num_tests-1 else -1
+        df.iloc[idxa:idxb, 1:].to_csv("./Test{:0>2d}_{}.csv".format(i+1, test_marks_list[i]), header=0, index=0)
     
