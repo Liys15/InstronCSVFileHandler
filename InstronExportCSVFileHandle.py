@@ -9,7 +9,7 @@ import pandas as pd
 
 filepath = "./环氧树脂拉伸_1.csv"
 
-specimen_df_list = []
+num_tests = 0
 
 with open(filepath, 'r', encoding='ANSI') as fp:
     res_list = []
@@ -19,11 +19,11 @@ with open(filepath, 'r', encoding='ANSI') as fp:
             break
         else:
             res_list.append(l)
-    
-    num_tests = int(res_list[-1].split(',')[0].strip('"'))
+
+    num_tests = int(res_list[-1].split(',')[0].strip('"')) # 试件数量
     test_marks_list = []
     for i in range(num_tests):
-        test_marks_list.append(res_list[i+3].split(',')[1].strip('"'))
+        test_marks_list.append(res_list[i+3].split(',')[1].strip('"')) # 试件标识
 
     df = pd.read_csv(fp, encoding="ANSI", header=None, index_col=False)
 
@@ -35,3 +35,6 @@ with open(filepath, 'r', encoding='ANSI') as fp:
         idxb = specimen_start_idxs[i+1][0] if i<num_tests-1 else -1
         df.iloc[idxa:idxb, 1:].to_csv("./Test{:0>2d}_{}.csv".format(i+1, test_marks_list[i]), header=0, index=0)
     
+with open(filepath, 'r', encoding='ANSI') as fp2:
+    info = pd.read_csv(fp2, skiprows=1, nrows=num_tests+1)
+    info.to_csv("./Test_Info.csv", index=0)
