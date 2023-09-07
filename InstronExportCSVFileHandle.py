@@ -6,12 +6,19 @@ Description: This is a script file dealing CSV.
 """
 
 import pandas as pd
+import os
 
-filepath = "./环氧树脂拉伸_1.csv"
+cwd = os.getcwd()
+subfolder = 'testdata'
+filedir = os.path.join(cwd, subfolder)
+filename_inp = '环氧树脂拉伸_1.csv'
+file_inp = os.path.join(filedir, filename_inp)
+
+filename_abs = filename_inp[0:filename_inp.rfind('_')]
 
 num_tests = 0
 
-with open(filepath, 'r', encoding='ANSI') as fp:
+with open(file_inp, 'r', encoding='ANSI') as fp:
     res_list = []
     while True:
         l = fp.readline()
@@ -33,8 +40,8 @@ with open(filepath, 'r', encoding='ANSI') as fp:
     for i in range(num_tests):
         idxa = specimen_start_idxs[i][0]
         idxb = specimen_start_idxs[i+1][0] if i<num_tests-1 else -1
-        df.iloc[idxa:idxb, 1:].to_csv("./Test{:0>2d}_{}.csv".format(i+1, test_marks_list[i]), header=0, index=0)
-    
-with open(filepath, 'r', encoding='ANSI') as fp2:
+        df.iloc[idxa:idxb, 1:].to_csv(os.path.join(filedir ,"{}{:0>2d}_{}.csv".format(filename_abs ,i+1, test_marks_list[i])), header=0, index=0)
+
+with open(file_inp, 'r', encoding='ANSI') as fp2:
     info = pd.read_csv(fp2, skiprows=1, nrows=num_tests+1)
-    info.to_csv("./Test_Info.csv", index=0)
+    info.to_csv(os.path.join(filedir ,"{}00_TestInfo.csv".format(filename_abs)), index=0)
