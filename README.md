@@ -1,5 +1,4 @@
 # InstronCSVFileHandler
-处理Instron万能试验机配套的Bluehill Universal软件导出的试验数据CSV文件，将包含多个试样结果的单个CSV文件拆分为多个单一试样结果的CSV文件
 
 <br />
 
@@ -8,9 +7,9 @@
     <img src="./Icon.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">AbqJobSubmitter</h3>
+  <h3 align="center">InstronCSVFileHandler</h3>
   <p align="center">
-    A tool for batch submitting Abaqus .inp files
+    处理Instron万能试验机配套的Bluehill Universal软件导出的试验数据CSV文件，将包含多个试样结果的单个CSV文件拆分为多个单一试样结果的CSV文件
   </p>
 
 </p>
